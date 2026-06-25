@@ -1,0 +1,30 @@
+export const rolesType =[
+    {
+        key:'Administrator',
+        value:'مدیر'
+    },
+    {
+        key:'Engineer',
+        value:'کارشناس'
+    },
+    {
+        key:'Employee',
+        value:'کارمند'
+    },
+    {
+        key:'Accountant',
+        value:'حسابدار'
+    },
+    {
+        key:'PanelMaker',
+        value:'تابلوساز'
+    },
+    {
+        key:'ElectAdmin',
+        value:'توزیع برق'
+    },
+    {
+        key:'Section',
+        value:'شهرستان'
+    }
+]

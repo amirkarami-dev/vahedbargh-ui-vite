@@ -1,0 +1,6 @@
+/* Global UI overrides */
+
+/* Align Ant Design icons slightly upward globally (override default -0.125em) */
+:where(.anticon) {
+  vertical-align: 0 !important;
+}

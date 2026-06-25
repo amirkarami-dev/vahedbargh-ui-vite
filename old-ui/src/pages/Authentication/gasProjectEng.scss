@@ -1,0 +1,148 @@
+.account-pages {
+  background-color: #f8f9fa; /* Light background */
+  padding: 20px;
+}
+
+.bg-primary {
+  background-color: #007bff; /* New primary color */
+}
+
+.text-white {
+  color: #ffffff; /* White text */
+}
+
+.text-primary {
+  color: #007bff; /* New primary text color */
+}
+
+.form-control {
+  border: 1px solid #007bff; /* New border color */
+}
+
+.btn-primary {
+  background-color: #28a745; /* New button color */
+  border-color: #28a745; /* New button border */
+}
+
+.btn-primary:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.form-check-input:checked {
+  background-color: #007bff; /* Checkbox checked color */
+}
+
+.form-check-label {
+  color: #343a40; /* Label text color */
+}
+
+.modern-login-container {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+  padding: 2rem;
+
+  .glassmorphism-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 2rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #1890ff, #13c2c2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-btn {
+    background: linear-gradient(45deg, #1890ff, #13c2c2);
+    border: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+  }
+
+  .trust-seal-section {
+    margin-top: 2rem;
+    
+    .trust-seal-image {
+      height: 60px;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .logo-hover-transform {
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: rotate(-5deg) scale(1.1);
+    }
+  }
+}
+
+.news-column {
+  .update-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    border-radius: 8px;
+    margin: 8px 0;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateX(5px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .ant-timeline {
+    padding: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+}
+
+.login-column, .news-column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .news-column {
+    .ant-timeline {
+      max-height: 400px;
+    }
+  }
+}
+
+.update-card {
+  .content-list {
+    direction: rtl;
+    text-align: right;
+    
+    .ant-typography {
+      line-height: 1.6;
+      padding-right: 8px;
+      position: relative;
+      
+      &::before {
+        content: "•";
+        color: #1890ff;
+        margin-left: 8px;
+        position: absolute;
+        right: -12px;
+      }
+    }
+  }
+}

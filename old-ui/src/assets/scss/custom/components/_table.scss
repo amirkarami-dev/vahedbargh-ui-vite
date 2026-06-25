@@ -1,0 +1,38 @@
+// 
+// _table.scss
+// 
+.table .demo-row-even {
+  background-color: #81c784;
+}
+.table .demo-row-odd {
+  background-color: #c8e6c9;
+}
+
+
+.table {
+  th {
+      font-weight: $fw-medium;
+  }
+}
+
+//Table centered
+.table-centered {
+  td,th {
+      vertical-align: middle !important;
+  }
+}
+
+.table-nowrap {
+  th, td {
+    white-space: nowrap;
+  }
+}
+
+.table-bordered {
+  border: $table-border-width solid $table-border-color;
+
+  th,
+  td {
+    border: $table-border-width solid $table-border-color;
+  }
+}

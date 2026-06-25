@@ -1,0 +1,6 @@
+export const REQREGISTER_USER = "req_register_user"
+export const REQREGISTER_USER_SUCCESSFUL = "req_register_user_successful"
+export const REQREGISTER_USER_FAILED = "req_register_user_failed"
+export const SUBMIT_SMS = "submit_sms"
+export const SUBMIT_SMS_SUCCESSFUL = "submit_sms_successful"
+export const SUBMIT_SMS_FAILED = "submit_sms_failed"

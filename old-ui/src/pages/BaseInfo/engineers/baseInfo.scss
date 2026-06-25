@@ -1,0 +1,76 @@
+// Polish for the BaseInfo (engineer management) screen — antd, RTL, brand teal.
+
+$brand: #004943;
+$brand-dark: #003430;
+$brand-tint: #e6f0ef;
+$brand-hover: #e6f7f4;
+
+.base-info-page {
+  .base-info-container {
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+
+  .base-info-header-card,
+  .base-info-body-card,
+  .engineer-filter-card,
+  .engineer-table-card {
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .base-info-header-card .ant-breadcrumb {
+    font-size: 12px;
+  }
+
+  .engineer-filter-card {
+    margin-bottom: 12px;
+    background: #fafafa;
+  }
+
+  // Table polish
+  .engineer-table-card {
+    .ant-table-thead > tr > th {
+      background: $brand-tint;
+      color: $brand-dark;
+      font-weight: 600;
+    }
+
+    .ant-table-tbody > tr.odd > td {
+      background: #fafafa;
+    }
+    .ant-table-tbody > tr.even > td {
+      background: #fff;
+    }
+    .ant-table-tbody > tr:hover > td {
+      background: $brand-hover !important;
+    }
+
+    // Numeric / date columns read better with tabular figures
+    .ant-tag {
+      font-variant-numeric: tabular-nums;
+      margin-inline-end: 0;
+    }
+  }
+
+  // Two-line name cell
+  .cell-stack {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+
+    .cell-title {
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.85);
+    }
+    .cell-sub {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.45);
+    }
+  }
+}
+
+// Drawer form: tighten the grouped checkbox rows
+.ant-drawer .ant-form-item {
+  margin-bottom: 12px;
+}

@@ -1,0 +1,35 @@
+.elec-project-eng-custom {
+    .MuiDataGrid-root.MuiDataGrid-root {
+      direction: ltr !important;
+  }
+  }
+  .elec-project-eng-custom
+  {
+    .MuiDataGrid-root.MuiDataGrid-root--densityStandard {
+      direction: ltr !important;
+  
+      
+    
+      .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+        
+        color: #141414 !important;
+      }
+    
+      .MuiDataGrid-columnHeaderTitle {
+        
+      }
+    
+      .MuiDataGrid-cellContent {
+        
+      }
+    
+      .MuiDataGrid-footerContainer {
+        direction: rtl !important;
+      }
+    
+      .MuiButton-startIcon.MuiButton-iconSizeSmall {
+        margin-left: -2px !important;
+        margin-right: 8px !important;
+      }
+    }
+  }

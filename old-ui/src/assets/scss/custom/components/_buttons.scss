@@ -1,0 +1,62 @@
+// 
+// _buttons.scss
+// 
+
+button,a {
+  outline: none !important;
+}
+
+
+// Rounded Buttons
+.btn-rounded {
+  border-radius: 30px;
+}
+
+.btn-dark{
+  color: $gray-200 !important;
+}
+
+.btn-outline-dark{
+  &:hover{
+    color: $gray-200 !important;
+  }
+}
+.bg-btn-gray{
+  background-color: #F3F3F3;
+}
+.btn-gray {
+  background-color: #F3F3F3; /* Blue background */
+  border: none; /* Remove borders */
+  color: #888888; /* White text */
+  cursor: pointer; /* Mouse pointer on hover */
+  h1,h2,h3,h4 {
+    margin: 0;
+    padding: 0;
+  }
+  border-radius: 1rem;
+}
+.btn-outline-gray {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  border: none; /* Remove borders */
+  color: #888888; /* White text */
+  cursor: pointer; /* Mouse pointer on hover */
+  h1,h2,h3,h4 {
+    margin: 0;
+    padding: 0;
+  }
+  border-radius: 1rem;
+  &:hover{
+    background-color: $gray-100 !important;
+  }
+}
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: rgb(219, 220, 223);
+}
+.scaleY{
+  // -ms-transform: skewY(-30deg); /* IE 9 */
+  // transform: skewY(-30deg);
+  transform: rotate(-45deg)
+}

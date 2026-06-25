@@ -1,0 +1,282 @@
+// Modern 2026 chrome for VerticalLayout — light glassy topbar/footer + deep-teal
+// sidebar, RTL, with a CSS-variable light/dark theme keyed off
+// #layout-wrapper[data-theme]. Replaces the old inline-style soup + styled-jsx.
+
+/* ---------- Theme tokens ---------- */
+#layout-wrapper {
+  // Light (default)
+  --app-bg: #f4f6f6;
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --header-border: #e8efee;
+  --header-shadow: 0 2px 12px rgba(0, 52, 48, 0.05);
+  --text-strong: #003430;
+  --text-muted: #5b6b69;
+  --icon-btn-bg: #eef4f3;
+  --icon-btn-bg-hover: #dceae8;
+  --icon-btn-color: #004943;
+  --logo-grad-start: #003430;
+  --logo-grad-end: #004943;
+  --sidebar-grad-start: #003430;
+  --sidebar-grad-end: #004943;
+  --sidebar-shadow: 4px 0 24px rgba(0, 52, 48, 0.18);
+  --menu-color: rgba(255, 255, 255, 0.85);
+  --menu-color-hover: #ffffff;
+  --menu-bg-hover: rgba(255, 255, 255, 0.08);
+  --menu-color-selected: #ffffff;
+  --menu-bg-selected: rgba(255, 255, 255, 0.16);
+  --footer-bg: #ffffff;
+  --footer-border: #e8efee;
+}
+
+#layout-wrapper[data-theme="dark"] {
+  --app-bg: #0e1413;
+  --header-bg: rgba(16, 22, 21, 0.85);
+  --header-border: #1f2a28;
+  --header-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  --text-strong: #e9f5f2;
+  --text-muted: #8aa39e;
+  --icon-btn-bg: rgba(255, 255, 255, 0.06);
+  --icon-btn-bg-hover: rgba(255, 255, 255, 0.12);
+  --icon-btn-color: #5fd0bf;
+  --logo-grad-start: #00695f;
+  --logo-grad-end: #00897b;
+  --sidebar-grad-start: #0a100f;
+  --sidebar-grad-end: #14201d;
+  --sidebar-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+  --menu-color: rgba(255, 255, 255, 0.72);
+  --menu-color-hover: #ffffff;
+  --menu-bg-hover: rgba(255, 255, 255, 0.06);
+  --menu-color-selected: #5fd0bf;
+  --menu-bg-selected: rgba(95, 208, 191, 0.16);
+  --footer-bg: #0e1413;
+  --footer-border: #1f2a28;
+}
+
+#layout-wrapper.modern-layout {
+  background: var(--app-bg);
+  transition: background-color 0.3s ease;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 70px;
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--header-border);
+  box-shadow: var(--header-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    padding: 0 24px;
+  }
+
+  &__start,
+  &__end {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 10px;
+    background: var(--icon-btn-bg);
+    color: var(--icon-btn-color);
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background: var(--icon-btn-bg-hover);
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-inline-start: 16px;
+    text-decoration: none;
+  }
+
+  &__logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      var(--logo-grad-start),
+      var(--logo-grad-end)
+    );
+    color: #fff;
+    font-size: 24px;
+    box-shadow: 0 4px 12px rgba(0, 52, 48, 0.25);
+  }
+
+  &__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__title {
+    color: var(--text-strong);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+    transition: color 0.3s ease;
+  }
+
+  &__subtitle {
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+}
+
+/* ---------- Sidebar + menu (deep teal in both modes) ---------- */
+#layout-wrapper .vertical-menu {
+  background: linear-gradient(
+    180deg,
+    var(--sidebar-grad-start),
+    var(--sidebar-grad-end)
+  );
+  box-shadow: var(--sidebar-shadow);
+  transition: background 0.3s ease;
+
+  .ant-menu {
+    background: transparent;
+    border-inline-end: none;
+  }
+
+  // Item + submenu label colors (beats Skote/antd defaults via #id specificity)
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    color: var(--menu-color);
+  }
+
+  // The fix: menu labels are <Link> (<a>) tags — make them inherit the item
+  // color instead of the dark Skote/bootstrap anchor color (was black on teal).
+  .ant-menu a,
+  .ant-menu-item .anticon,
+  .ant-menu-submenu-title .anticon {
+    color: inherit;
+  }
+
+  .ant-menu-item:hover,
+  .ant-menu-submenu-title:hover {
+    color: var(--menu-color-hover) !important;
+    background: var(--menu-bg-hover);
+
+    a {
+      color: var(--menu-color-hover);
+    }
+  }
+
+  .ant-menu-item-selected {
+    color: var(--menu-color-selected) !important;
+    background: var(--menu-bg-selected) !important;
+
+    a {
+      color: var(--menu-color-selected);
+    }
+  }
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  background: var(--footer-bg);
+  border-top: 1px solid var(--footer-border);
+  padding: 16px 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      var(--logo-grad-start),
+      var(--logo-grad-end)
+    );
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(0, 52, 48, 0.2);
+  }
+
+  &__title {
+    color: var(--text-strong);
+    font-weight: 600;
+    font-size: 13px;
+    transition: color 0.3s ease;
+  }
+
+  &__copy {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: color 0.3s ease;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991px) {
+  .app-header__title {
+    font-size: 15px;
+  }
+  .app-header__subtitle {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header__title {
+    font-size: 13px;
+  }
+  .app-header__titles {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .app-header__title {
+    font-size: 12px;
+  }
+  .app-header__subtitle {
+    display: none;
+  }
+  .app-header__inner {
+    padding: 0 12px;
+  }
+}

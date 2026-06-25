@@ -1,0 +1,142 @@
+.even {
+  background-color: rgb(240, 255, 255);
+}
+// .odd {
+//   background-color: rgb(195, 219, 219);
+// }
+.negative {
+  background-color: rgba(157, 255, 118, 0.49);
+  color: #1a3e72;
+  font-weight: 600;
+}
+.positive {
+  background-color: #d47483;
+}
+.errorRow {
+  background-color: #d47483;
+}
+
+/* Chat view styles */
+.chat-container {
+  height: 60vh;
+  overflow-y: auto;
+  padding: 12px;
+  background: #fafafa;
+}
+
+.message-row {
+  display: flex;
+  margin: 8px 0;
+}
+
+.message-row.left {
+  justify-content: flex-start;
+}
+
+.message-row.right {
+  justify-content: flex-end;
+}
+
+/* RTL override: in RTL, flex-start is visually right and flex-end is visually left */
+[dir='rtl'] .message-row.left {
+  justify-content: flex-end; /* left side in RTL */
+}
+[dir='rtl'] .message-row.right {
+  justify-content: flex-start; /* right side in RTL */
+}
+
+.bubble {
+  max-width: 70%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.bubble-left {
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-top-left-radius: 4px;
+}
+
+.bubble-right {
+  background: #1677ff;
+  color: #ffffff;
+  border-top-right-radius: 4px;
+}
+
+.message-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 6px;
+}
+
+.bubble-right .message-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.message-status.sent {
+  color: #52c41a;
+}
+
+.message-status.pending {
+  color: #faad14;
+}
+
+.message-status.read {
+  color: #1677ff; /* distinct color to indicate read */
+}
+
+.day-separator {
+  text-align: center;
+  color: #888;
+  font-size: 12px;
+  margin: 8px 0 12px;
+}
+
+.message-avatar {
+  align-self: flex-end;
+  margin: 0 8px;
+}
+
+/* Responsive ticket layout */
+.ticket-layout {
+  width: 100%;
+}
+.ticket-grid {
+  width: 100%;
+  display: flex;
+}
+.msgs-col, .send-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure on desktop the send form appears to the right of messages even in RTL root */
+@media (min-width: 768px) {
+  .ticket-grid { flex-direction: row; }
+  /* In RTL, put send column to the right (order 1) and messages to the left (order 2) */
+  [dir='rtl'] .ticket-grid .send-col { order: 1; }
+  [dir='rtl'] .ticket-grid .msgs-col { order: 2; }
+}
+
+@media (max-width: 767px) {
+  .chat-container {
+    height: 50vh;
+  }
+  .send-col {
+    order: 2; /* ensure form appears below messages */
+    margin-top: 8px;
+  }
+  .msgs-col {
+    order: 1;
+  }
+}
+
+/* No explicit ordering for LTR on desktop; DOM order (messages then form) naturally places form on the right */
