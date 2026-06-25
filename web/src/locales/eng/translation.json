@@ -1,0 +1,32 @@
+{
+  "app": {
+    "title": "Vahedbargh"
+  },
+  "common": {
+    "logout": "Logout"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "engineers": "Engineers"
+  },
+  "auth": {
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "loggingIn": "Signing in...",
+    "usernameRequired": "Please enter your username",
+    "passwordRequired": "Please enter your password",
+    "sms": {
+      "title": "Two-factor verification",
+      "sent": "A 4-digit code was sent to your phone",
+      "codePlaceholder": "Enter the 4-digit code",
+      "codeRequired": "Please enter the code",
+      "submit": "Confirm"
+    }
+  },
+  "engineers": {
+    "searchPlaceholder": "Search engineer name",
+    "filterAssign": "Filter signed",
+    "empty": "No engineers found"
+  }
+}

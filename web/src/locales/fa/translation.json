@@ -1,0 +1,32 @@
+{
+  "app": {
+    "title": "واحد برق"
+  },
+  "common": {
+    "logout": "خروج"
+  },
+  "menu": {
+    "dashboard": "داشبورد",
+    "engineers": "کارشناسان"
+  },
+  "auth": {
+    "login": "ورود",
+    "username": "نام کاربری",
+    "password": "رمز عبور",
+    "loggingIn": "در حال ورود...",
+    "usernameRequired": "لطفا نام کاربری را وارد کنید",
+    "passwordRequired": "لطفا رمز عبور را وارد کنید",
+    "sms": {
+      "title": "تایید رمز دو عاملی",
+      "sent": "رمز ۴ رقمی به موبایل شما ارسال شد",
+      "codePlaceholder": "رمز ۴ رقمی را وارد کنید",
+      "codeRequired": "لطفا کد را وارد کنید",
+      "submit": "تایید"
+    }
+  },
+  "engineers": {
+    "searchPlaceholder": "جستجوی نام کارشناس",
+    "filterAssign": "فیلتر تایید امضا",
+    "empty": "کارشناسی یافت نشد"
+  }
+}
