@@ -184,6 +184,8 @@ Auth (login/register/forgot/SMS‑OTP/profile) · Dashboard (charts) · **ElectP
 ## New-app conventions
 
 - **Imports:** path alias **`@/` → `web/src`** (set in `vite.config.ts` + `tsconfig.json`), mirroring old-ui's `baseUrl: ./src`. Write `@/shared/api`, `@/features/electProjects/...` — no `../../..` chains.
+- **Shared vs feature — avoid duplication.** Anything used by **2+ features** lives under `src/shared/` and is imported via its barrel: `@/shared/components` (UI like `Locations`, `PersianDatePicker`), `@/shared/lib`, `@/shared/api`, `@/shared/enums`, `@/shared/geo`, `@/shared/stores`, `@/shared/types`. **Before creating a component, search `src/shared/components` first.** Feature-only code stays in `src/features/<domain>/`; promote it to `shared/` the moment a second feature needs it.
+- **Live progress** is tracked in [web/MIGRATION_STATUS.md](web/MIGRATION_STATUS.md) — update it as screens land.
 - **Types:** `strict: true`. Port `old-ui/src/models/types/*` (17 enums) and `common/enums/*` (roles, inspection params) to typed `enum`/`as const`. Type each endpoint's request/response.
 - **Naming:** components `PascalCase.tsx`, hooks `useXxx.ts`, query hooks colocated in `features/<domain>/api/`, Zustand stores `xxxStore.ts`, column defs `xxxColumns.tsx`.
 - **Lint/format:** ESLint **flat config** (`eslint.config.js`) + Prettier, enforced once in config. (old-ui used no‑semicolons + `arrowParens: avoid`; match it or take Prettier defaults — just be consistent.)

@@ -1,9 +1,12 @@
-import { Space, Tag, Tooltip, type TableColumnsType } from 'antd'
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { Button, Space, Tag, Tooltip, type TableColumnsType } from 'antd'
+import { CheckCircleOutlined, CloseCircleOutlined, EditFilled } from '@ant-design/icons'
+import { EngHistoryEdit } from '@/features/engineers/EngHistoryEdit'
+import { UserFilesDialog } from '@/features/userFiles/UserFilesDialog'
+import { GetCityWithSection } from '@/shared/geo/cityName'
 import type { Engineer } from '@/features/engineers/types'
 
 // Boolean status tag: green+check when true, red+cross when false (icon + label,
-// never color alone — accessibility). Ported from old-ui columns.js.
+// never color alone). Ported from old-ui columns.js.
 const boolTag = (cond: boolean | string | null | undefined, label: string, key?: string) => (
   <Tag
     key={key}
@@ -16,15 +19,45 @@ const boolTag = (cond: boolean | string | null | undefined, label: string, key?:
 
 const hasFile = (row: Engineer, code: string) => (row.engFiles ?? []).some(x => x.name === code)
 
-// Column titles kept identical to old-ui. Action column (edit/history/files) and
-// the city sub-label (returnCityName) are deferred — see EngineersPage TODO.
-export function engineerColumns(): TableColumnsType<Engineer> {
+export function engineerColumns({
+  onEdit,
+}: {
+  onEdit: (r: Engineer) => void
+}): TableColumnsType<Engineer> {
   return [
+    {
+      title: 'عملیات',
+      key: 'actions',
+      width: 170,
+      render: (_, row) => (
+        <Space direction="vertical" size={4} style={{ width: '100%' }}>
+          <Button
+            icon={<EditFilled />}
+            size="small"
+            type="primary"
+            ghost
+            block
+            onClick={() => onEdit(row)}
+          >
+            ویرایش کارشناس
+          </Button>
+          <EngHistoryEdit engineer={row} history={row.engineerHistoryViewModel ?? []} />
+          <UserFilesDialog userId={row.userId} fullName={row.fullName} />
+        </Space>
+      ),
+    },
     {
       title: 'نام و نام خانوادگی',
       key: 'fullName',
-      width: 160,
-      render: (_, row) => row.fullName,
+      width: 180,
+      render: (_, row) => (
+        <div>
+          <div>{row.fullName}</div>
+          {row.idSection > 0 && (
+            <div style={{ fontSize: 12, opacity: 0.65 }}>{GetCityWithSection(row.idSection)}</div>
+          )}
+        </div>
+      ),
     },
     {
       title: <Tooltip title="مدارک آپلود شده">مدارک پایه</Tooltip>,

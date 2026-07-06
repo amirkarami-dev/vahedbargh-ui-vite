@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+**/dist/
+.next/
+build/
+
+# Logs
+*.log
+logs/
+
+# Env
+.env
+.env.*.local
+
+# Editor / OS
+.DS_Store
+.idea/
+
+# Agent tooling (not part of the project)
+.claude-flow/
+.claude/proven-config.json
+.claude/.proven-config-version
+.claude/settings.local.json
+
+# Keep the dev-server launch config so the preview is reproducible
+!.claude/launch.json

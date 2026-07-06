@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>وضعیت مهاجرت | واحد برق</title>
+    <style>
+      :root {
+        --brand: #004943;
+        --brand-tint: #e6f0ef;
+        --done: #1f9d55;
+        --done-bg: #e6f6ec;
+        --prog: #c47d00;
+        --prog-bg: #fdf3e0;
+        --todo: #6b7280;
+        --todo-bg: #f1f3f4;
+        --ink: #1f2937;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --card: #ffffff;
+        --page: #f4f6f6;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--page);
+        color: var(--ink);
+        font-family: Tahoma, "Segoe UI", system-ui, sans-serif;
+        line-height: 1.7;
+      }
+      .wrap { max-width: 1000px; margin: 0 auto; padding: 24px 16px 64px; }
+      header h1 { margin: 0 0 4px; font-size: 24px; color: var(--brand); }
+      header p { margin: 0; color: var(--muted); font-size: 14px; }
+
+      .bar {
+        height: 14px; border-radius: 8px; background: var(--line);
+        overflow: hidden; margin: 16px 0 8px; display: flex;
+      }
+      .bar > span { height: 100%; }
+      .bar .s-done { background: var(--done); }
+      .bar .s-prog { background: var(--prog); }
+      .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+      .legend b { color: var(--ink); }
+      .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-inline-end: 6px; vertical-align: middle; }
+
+      .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+      .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+      .stat .n { font-size: 26px; font-weight: 700; }
+      .stat .l { font-size: 13px; color: var(--muted); }
+
+      .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 8px; }
+      .tab {
+        border: 1px solid var(--line); background: var(--card); color: var(--ink);
+        padding: 7px 14px; border-radius: 999px; font-size: 14px; cursor: pointer;
+        font-family: inherit; transition: all .15s;
+      }
+      .tab:hover { border-color: var(--brand); }
+      .tab.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+      .tab .c { opacity: .7; font-size: 12px; margin-inline-start: 4px; }
+
+      .group { margin-top: 22px; }
+      .group h2 {
+        font-size: 16px; margin: 0 0 10px; padding-bottom: 6px;
+        border-bottom: 2px solid var(--brand-tint); color: var(--brand);
+      }
+      .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+      .item {
+        background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+        padding: 10px 12px; display: flex; align-items: flex-start; gap: 10px;
+      }
+      .item .ico { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%;
+        display: grid; place-items: center; font-size: 13px; font-weight: 700; color: #fff; margin-top: 2px; }
+      .item.done .ico { background: var(--done); }
+      .item.prog .ico { background: var(--prog); }
+      .item.todo .ico { background: var(--todo); }
+      .item .t { font-size: 14px; font-weight: 600; }
+      .item .d { font-size: 12px; color: var(--muted); }
+      .pill { font-size: 11px; padding: 1px 8px; border-radius: 999px; margin-inline-start: auto; white-space: nowrap; }
+      .pill.done { background: var(--done-bg); color: var(--done); }
+      .pill.prog { background: var(--prog-bg); color: var(--prog); }
+      .pill.todo { background: var(--todo-bg); color: var(--todo); }
+      .hidden { display: none !important; }
+      footer { margin-top: 32px; font-size: 12px; color: var(--muted); text-align: center; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>وضعیت مهاجرت — واحد برق</h1>
+        <p>بازسازی old-ui با React 19 + Vite. این صفحه مستقل است؛ از <code>web/MIGRATION_STATUS.md</code> به‌روزرسانی می‌شود.</p>
+      </header>
+
+      <div class="bar" id="bar"></div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--done)"></span><b id="lg-done">0</b> انجام شده</span>
+        <span><span class="dot" style="background:var(--prog)"></span><b id="lg-prog">0</b> در حال انجام</span>
+        <span><span class="dot" style="background:var(--todo)"></span><b id="lg-todo">0</b> شروع نشده</span>
+        <span style="margin-inline-start:auto"><b id="lg-pct">0%</b> تکمیل</span>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="tabs" id="tabs"></div>
+      <div id="content"></div>
+
+      <footer>آخرین به‌روزرسانی: ۵ تیر ۱۴۰۴ · وضعیت‌ها: شروع نشده / در حال انجام / انجام شده</footer>
+    </div>
+
+    <script>
+      // status: 'done' | 'prog' | 'todo'
+      const DATA = [
+        { group: 'پایه و زیرساخت', items: [
+          { t: 'Vite + React 19 + TypeScript', d: 'pnpm، ساختار feature-first', s: 'done' },
+          { t: 'Ant Design v5 (فقط antd)', d: 'RTL، رنگ برند #004943، فونت IRANSansXFaNum', s: 'done' },
+          { t: 'React Query + Zustand', d: 'داده سرور / وضعیت UI', s: 'done' },
+          { t: 'مسیریابی + گارد نقش', d: 'RequireRole', s: 'done' },
+          { t: 'i18n (fa + eng)', d: 'پیش‌فرض فارسی', s: 'done' },
+          { t: 'لایه API + JWT', d: 'Bearer، رفرش x-access-token، 401→login، پیام خطای فارسی', s: 'done' },
+          { t: 'SignalR', d: 'frontnotif / meet', s: 'done' },
+          { t: 'منوی نقش‌محور و گروه‌بندی‌شده', d: 'از allRoutes.js', s: 'done' },
+          { t: 'Code-split', d: 'لود تنبل صفحات + جداسازی ECharts', s: 'done' },
+          { t: 'ساختار کامپوننت مشترک', d: 'shared/components با barrel', s: 'done' },
+        ]},
+        { group: 'احراز هویت', items: [
+          { t: 'ورود (Login)', d: '/Identity/Login', s: 'done' },
+          { t: 'کد پیامک دو مرحله‌ای', d: '/Identity/LoginByCode', s: 'done' },
+          { t: 'خروج (Logout)', d: '/Identity/Logout', s: 'done' },
+          { t: 'ثبت‌نام / درخواست ثبت‌نام', d: 'صفحه دموی قالب (اندپوینت فیک) — رد شد', s: 'done' },
+          { t: 'فراموشی رمز عبور', d: 'صفحه دموی قالب — رد شد', s: 'done' },
+          { t: 'پروفایل کاربر', d: 'هویت/نقش‌ها/تغییر رمز عبور — کامل', s: 'done' },
+          { t: 'درخواست دمو', d: 'مودال صفحه ورود', s: 'prog' },
+        ]},
+        { group: 'صفحات اصلی', items: [
+          { t: 'کارشناسان (BaseInfo)', d: 'لیست، فیلتر، افزودن/ویرایش، پروانه، فایل‌ها', s: 'done' },
+          { t: 'داشبورد', d: 'بازطراحی نقش‌محور: خوش‌آمد/KPI واقعی/دسترسی سریع/اطلاعیه/متابیس + تم تیره/روشن/سیستم + هدر جدید — کامل', s: 'done' },
+          { t: 'ElectProjects (لیست اصلی)', d: 'فیلتر/صفحه‌بندی/ویرایش/فایل/حذف/ارسال/پیامک/تخصیص/تابلوساز/توقف/زیرپرونده — کامل', s: 'done' },
+          { t: 'ElectProjects — انواع', d: 'Edc + PanelMaker کامل؛ Eng/Section در قدیم غیرفعال', s: 'done' },
+          { t: 'ElectProjectProcess', d: 'Eng + تخصیص ادمین + Edc + List(حذف/قبول/تغییرکارشناس/اصلی‌فرعی) — کامل (ListView در قدیم غیرفعال)', s: 'done' },
+          { t: 'Projects / CreateProject', d: 'CreateProject + ویزارد ۵ مرحله‌ای Projects (نوع/فنی/مالک/مکان/جواز→ثبت) — کامل', s: 'done' },
+          { t: 'حسابداری (Accounting)', d: 'تراکنش‌ها(فیلتر+اکسل)/فاکتورها/فاکتورهای من/ثبت فیش/پرداختی کارشناس — کامل', s: 'done' },
+          { t: 'EngPayment', d: 'انتخاب دوره/ایجاد لیست/ویرایش کسورات/تایید/خروجی بانک+اکسل — کامل', s: 'done' },
+          { t: 'EngWork', d: 'کارکرد(فیلتر دوره/کارشناس)/سوخت سهمیه(ثبت+ویرایش درجا+تایید) — کامل', s: 'done' },
+          { t: 'پشتیبانی (Support)', d: 'لیست/فیلتر/آمار/ایجاد تیکت/پاسخ سریع/گفتگو/بستن/فایل — کامل', s: 'done' },
+          { t: 'فایل‌های کاربر (UserFiles)', d: 'صفحه مستقل فایل‌های من: انتخاب نوع/آپلود/دانلود/حذف — کامل', s: 'done' },
+          { t: 'گزارش‌ها (Reports)', d: 'پروژه‌ها/فاکتور/کارشناسان — موتور Stimulsoft + قالب‌های mrt', s: 'done' },
+          { t: 'کاربران (Users)', d: 'لیست/جستجو/افزودن/ویرایش/فعال‌سازی/حذف — کامل (مدیر)', s: 'done' },
+          { t: 'مزایده‌ها (Auctions)', d: 'در قدیم غیرفعال (بدون مسیر) — نیازی نیست', s: 'done' },
+          { t: 'ترسیم پلان (PipingPlan)', d: 'حذف شد به‌درخواست کاربر — نیازی نیست', s: 'done' },
+          { t: 'عمومی: tp / ep', d: 'tp(پرداخت→توکن→درگاه) + ep(اطلاعات پرونده با e=) — کامل', s: 'done' },
+        ]},
+        { group: 'کامپوننت‌های مشترک', items: [
+          { t: 'Locations', d: 'استان/شهرستان/بخش (antd)', s: 'done' },
+          { t: 'PersianDatePicker', d: 'تاریخ شمسی', s: 'done' },
+          { t: 'PageFallback', d: 'لودینگ لود تنبل', s: 'done' },
+          { t: 'داده جغرافیا + cityName', d: 'provinces/cities/sections', s: 'done' },
+          { t: 'enums + getEnums', d: 'engGrade/workPermit/userFile', s: 'done' },
+          { t: 'دیالوگ فایل کاربر', d: 'features/userFiles', s: 'done' },
+          { t: 'گرید فایل/آپلود، خروجی اکسل، گزارش', d: 'دیالوگ فایل/آپلود، اکسل(لیزی)، استیمول‌سافت، مختصات به‌جای نقشه — کامل', s: 'done' },
+        ]},
+      ];
+
+      const META = {
+        done: { label: 'انجام شده', mark: '✓' },
+        prog: { label: 'در حال انجام', mark: '…' },
+        todo: { label: 'شروع نشده', mark: '•' },
+      };
+
+      const all = DATA.flatMap(g => g.items);
+      const count = s => all.filter(i => i.s === s).length;
+      const nDone = count('done'), nProg = count('prog'), nTodo = count('todo'), nAll = all.length;
+      const pct = Math.round((nDone / nAll) * 100);
+
+      document.getElementById('bar').innerHTML =
+        `<span class="s-done" style="width:${(nDone / nAll) * 100}%"></span>` +
+        `<span class="s-prog" style="width:${(nProg / nAll) * 100}%"></span>`;
+      document.getElementById('lg-done').textContent = nDone;
+      document.getElementById('lg-prog').textContent = nProg;
+      document.getElementById('lg-todo').textContent = nTodo;
+      document.getElementById('lg-pct').textContent = pct + '%';
+
+      document.getElementById('stats').innerHTML = [
+        ['کل موارد', nAll], ['انجام شده', nDone], ['در حال انجام', nProg], ['شروع نشده', nTodo],
+      ].map(([l, n]) => `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+
+      const filters = [
+        { k: 'all', label: 'همه', c: nAll },
+        { k: 'todo', label: 'شروع نشده', c: nTodo },
+        { k: 'prog', label: 'در حال انجام', c: nProg },
+        { k: 'done', label: 'انجام شده', c: nDone },
+      ];
+      let active = 'all';
+
+      function renderTabs() {
+        document.getElementById('tabs').innerHTML = filters.map(f =>
+          `<button class="tab ${f.k === active ? 'active' : ''}" data-k="${f.k}">${f.label}<span class="c">${f.c}</span></button>`
+        ).join('');
+        document.querySelectorAll('.tab').forEach(b =>
+          b.onclick = () => { active = b.dataset.k; renderTabs(); renderContent(); });
+      }
+
+      function renderContent() {
+        const html = DATA.map(g => {
+          const items = g.items.filter(i => active === 'all' || i.s === active);
+          if (!items.length) return '';
+          const cards = items.map(i => `
+            <div class="item ${i.s}">
+              <span class="ico">${META[i.s].mark}</span>
+              <div>
+                <div class="t">${i.t}</div>
+                ${i.d ? `<div class="d">${i.d}</div>` : ''}
+              </div>
+              <span class="pill ${i.s}">${META[i.s].label}</span>
+            </div>`).join('');
+          return `<div class="group"><h2>${g.group}</h2><div class="items">${cards}</div></div>`;
+        }).join('');
+        document.getElementById('content').innerHTML = html || '<p style="color:var(--muted)">موردی در این وضعیت نیست.</p>';
+      }
+
+      renderTabs();
+      renderContent();
+    </script>
+  </body>
+</html>

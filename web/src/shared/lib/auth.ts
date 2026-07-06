@@ -40,7 +40,8 @@ export function isAuthenticated(): boolean {
 
 type TokenClaims = Record<string, unknown>
 
-// TODO: confirm the exact role claim key against old-ui helpers/jwt-token-access.
+// Role claim is the short `role` key (old-ui jwt-token-access), with the long
+// .NET claim URI as a fallback. Confirmed by role-gated menus/routes working.
 export function getRoles(): string[] {
   const token = getAccessToken()
   if (!token) return []
@@ -50,5 +51,16 @@ export function getRoles(): string[] {
     return Array.isArray(raw) ? (raw as string[]) : [String(raw)]
   } catch {
     return []
+  }
+}
+
+// Decoded JWT claims (includes `sid`, `cid`, `name`…). old-ui getCurrentUser.
+export function getCurrentUser(): TokenClaims | null {
+  const token = getAccessToken()
+  if (!token) return null
+  try {
+    return jwtDecode<TokenClaims>(token)
+  } catch {
+    return null
   }
 }

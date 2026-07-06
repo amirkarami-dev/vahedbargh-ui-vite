@@ -41,7 +41,6 @@ import EngPayment from "pages/EngPayment"
 import ElectProjectProcessEdc from "pages/ElectProjectProcessEdc"
 import ElectProjectsEdc from "pages/ElectProjectsEdc"
 import ProjectPublic from "pages/ElectProjects/EP"
-import PipingPlan from "pages/PipingPlan"
 
 const userRoutes = [
   {
@@ -311,17 +310,6 @@ const userRoutes = [
     path: "/accounting/EngPayment",
     component: EngPayment,
     roles: ["Accountant"],
-    hide: false,
-  },
-  // Piping Plan
-  {
-    id: 1012,
-    parent_id: null,
-    title: "ترسیم پلان",
-    icon: "ti-layout-grid2",
-    path: "/plan",
-    component: PipingPlan,
-    roles: ["Administrator"],
     hide: false,
   },
 

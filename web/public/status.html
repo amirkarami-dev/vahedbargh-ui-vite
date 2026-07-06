@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vahedbargh — migration status</title>
+    <style>
+      :root {
+        --brand: #004943;
+        --brand-tint: #e6f0ef;
+        --done: #2e7d63;
+        --done-bg: #e7f4ef;
+        --prog: #b8860b;
+        --prog-bg: #fcf3e0;
+        --todo: #64748b;
+        --todo-bg: #f1f5f9;
+        --bg: #f6f8f8;
+        --card: #ffffff;
+        --text: #0f1f1d;
+        --muted: #5b6b69;
+        --border: #e2e8e7;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.5;
+      }
+      header {
+        background: linear-gradient(90deg, #003430, var(--brand));
+        color: #fff;
+        padding: 20px 24px;
+      }
+      header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+      header p { margin: 4px 0 0; opacity: 0.85; font-size: 13px; }
+      .legend { display: flex; gap: 16px; flex-wrap: wrap; padding: 14px 24px; font-size: 13px; color: var(--muted); }
+      .legend span { display: inline-flex; align-items: center; gap: 6px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; }
+      .board {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        padding: 8px 24px 32px;
+      }
+      .col { background: transparent; }
+      .col-head {
+        display: flex; align-items: center; justify-content: space-between;
+        font-size: 14px; font-weight: 700; padding: 8px 12px; border-radius: 10px; margin-bottom: 10px;
+      }
+      .col-head .count { font-size: 12px; font-weight: 700; padding: 1px 9px; border-radius: 999px; background: rgba(0,0,0,0.06); }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+      }
+      .card .t { font-size: 14px; font-weight: 600; }
+      .card .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+      .card.left-done { border-left: 4px solid var(--done); }
+      .card.left-prog { border-left: 4px solid var(--prog); }
+      .card.left-todo { border-left: 4px solid var(--todo); }
+      footer { padding: 0 24px 28px; color: var(--muted); font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Vahedbargh — migration status</h1>
+      <p>old-ui (React 17 / CRA) &rarr; web (React 19 + Vite). Live board of every screen.</p>
+    </header>
+
+    <div class="legend">
+      <span><i class="dot" style="background: var(--done)"></i> done</span>
+      <span><i class="dot" style="background: var(--prog)"></i> in progress</span>
+      <span><i class="dot" style="background: var(--todo)"></i> not started</span>
+    </div>
+
+    <div class="board">
+      <div class="col">
+        <div class="col-head" style="background: var(--done-bg); color: var(--done)">Done <span class="count">5</span></div>
+        <div class="card left-done"><div class="t">Foundation</div><div class="s">Vite · antd · React Query · Zustand · router+guard · i18n · API layer · SignalR · code-split</div></div>
+        <div class="card left-done"><div class="t">Auth — login</div><div class="s">login · SMS 2FA · logout</div></div>
+        <div class="card left-done"><div class="t">Role-based menu</div><div class="s">grouped from allRoutes.js</div></div>
+        <div class="card left-done"><div class="t">Engineers (BaseInfo)</div><div class="s">list · filters · add/edit · license history · files</div></div>
+        <div class="card left-done"><div class="t">Shared components</div><div class="s">Locations · PersianDatePicker · geo · enums · userFiles</div></div>
+      </div>
+
+      <div class="col">
+        <div class="col-head" style="background: var(--prog-bg); color: var(--prog)">In progress <span class="count">2</span></div>
+        <div class="card left-prog"><div class="t">ElectProjects</div><div class="s">list · filters · edit · files · delete · submit · SMS · assignments — panel-maker/stop next</div></div>
+        <div class="card left-prog"><div class="t">Dashboard</div><div class="s">shell only — real widgets TODO</div></div>
+      </div>
+
+      <div class="col">
+        <div class="col-head" style="background: var(--todo-bg); color: var(--todo)">Not started <span class="count">14</span></div>
+        <div class="card left-todo"><div class="t">ElectProjectProcess</div><div class="s">+ Edc / Eng / List / ListView</div></div>
+        <div class="card left-todo"><div class="t">ElectProjects variants</div><div class="s">Edc / Eng / Section / PanelMaker</div></div>
+        <div class="card left-todo"><div class="t">Projects / CreateProject</div></div>
+        <div class="card left-todo"><div class="t">Accounting</div><div class="s">invoices · engInvoices · payment · transactions · TP</div></div>
+        <div class="card left-todo"><div class="t">EngPayment</div></div>
+        <div class="card left-todo"><div class="t">EngWork</div><div class="s">work + quota-burn</div></div>
+        <div class="card left-todo"><div class="t">Support</div><div class="s">+ Ticket</div></div>
+        <div class="card left-todo"><div class="t">UserFiles</div><div class="s">standalone screen (dialog exists)</div></div>
+        <div class="card left-todo"><div class="t">Reports</div><div class="s">electProjects · engInvoices · engineers</div></div>
+        <div class="card left-todo"><div class="t">Users</div></div>
+        <div class="card left-todo"><div class="t">Auctions</div></div>
+        <div class="card left-todo"><div class="t">PipingPlan</div><div class="s">react-drawio</div></div>
+        <div class="card left-todo"><div class="t">Auth extras</div><div class="s">register · forgot · profile · demo</div></div>
+        <div class="card left-todo"><div class="t">Public pages</div><div class="s">/tp · /ep</div></div>
+      </div>
+    </div>
+
+    <footer>Open at <code>/status.html</code> while the dev server runs. Source of truth: <code>web/MIGRATION_STATUS.md</code>.</footer>
+  </body>
+</html>
