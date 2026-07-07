@@ -28,3 +28,6 @@ logs/
 
 # Keep the dev-server launch config so the preview is reproducible
 !.claude/launch.json
+
+# TS build info
+web/tsconfig.tsbuildinfo

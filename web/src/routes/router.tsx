@@ -77,6 +77,41 @@ const EngineersReportPage = lazy(() =>
 const EngPaymentPage = lazy(() =>
   import('@/features/engPayment/EngPaymentPage').then(m => ({ default: m.EngPaymentPage })),
 )
+const PublicLayout = lazy(() =>
+  import('@/features/public/landing/layout/PublicLayout').then(m => ({ default: m.PublicLayout })),
+)
+const Landing = lazy(() =>
+  import('@/features/public/landing/pages/Landing').then(m => ({ default: m.Landing })),
+)
+const AnnouncementsPage = lazy(() =>
+  import('@/features/public/landing/pages/AnnouncementsPage').then(m => ({ default: m.AnnouncementsPage })),
+)
+const AnnouncementDetailPage = lazy(() =>
+  import('@/features/public/landing/pages/AnnouncementDetailPage').then(m => ({
+    default: m.AnnouncementDetailPage,
+  })),
+)
+const MeetingsPage = lazy(() =>
+  import('@/features/public/landing/pages/MeetingsPage').then(m => ({ default: m.MeetingsPage })),
+)
+const MeetingDetailPage = lazy(() =>
+  import('@/features/public/landing/pages/MeetingDetailPage').then(m => ({ default: m.MeetingDetailPage })),
+)
+const ArchivePage = lazy(() =>
+  import('@/features/public/landing/pages/ArchivePage').then(m => ({ default: m.ArchivePage })),
+)
+const ServicesPage = lazy(() =>
+  import('@/features/public/landing/pages/ServicesPage').then(m => ({ default: m.ServicesPage })),
+)
+const ProcessesPage = lazy(() =>
+  import('@/features/public/landing/pages/ProcessesPage').then(m => ({ default: m.ProcessesPage })),
+)
+const AboutPage = lazy(() =>
+  import('@/features/public/landing/pages/AboutPage').then(m => ({ default: m.AboutPage })),
+)
+const ContactPage = lazy(() =>
+  import('@/features/public/landing/pages/ContactPage').then(m => ({ default: m.ContactPage })),
+)
 const UsersPage = lazy(() =>
   import('@/features/users/UsersPage').then(m => ({ default: m.UsersPage })),
 )
@@ -100,6 +135,23 @@ const withSuspense = (node: ReactNode) => <Suspense fallback={<PageFallback />}>
 // <RequireRole roles={[...]}> for role gating.
 export const router = createBrowserRouter([
   {
+    // Public landing zone (anonymous). '/' is the landing site; its login CTA
+    // links to /login. Wrapped in the Tailwind-scoped PublicLayout.
+    element: withSuspense(<PublicLayout />),
+    children: [
+      { path: '/', element: withSuspense(<Landing />) },
+      { path: '/announcements', element: withSuspense(<AnnouncementsPage />) },
+      { path: '/announcements/:slug', element: withSuspense(<AnnouncementDetailPage />) },
+      { path: '/meetings', element: withSuspense(<MeetingsPage />) },
+      { path: '/meetings/:id', element: withSuspense(<MeetingDetailPage />) },
+      { path: '/archive', element: withSuspense(<ArchivePage />) },
+      { path: '/services', element: withSuspense(<ServicesPage />) },
+      { path: '/processes', element: withSuspense(<ProcessesPage />) },
+      { path: '/about', element: withSuspense(<AboutPage />) },
+      { path: '/contact', element: withSuspense(<ContactPage />) },
+    ],
+  },
+  {
     element: <NonAuthLayout />,
     children: [
       { path: '/login', element: withSuspense(<Login />) },
@@ -115,7 +167,6 @@ export const router = createBrowserRouter([
       </RequireRole>
     ),
     children: [
-      { path: '/', element: <Navigate to="/dashboard" replace /> },
       { path: '/dashboard', element: withSuspense(<Dashboard />) },
       { path: '/profile', element: withSuspense(<ProfilePage />) },
       {

@@ -77,6 +77,21 @@ export const endpoints = {
     projectInfo: '/ElectProjects/GetProjectInfo',
     paymentMelliPublic: '/Identity/PaymentMelliPublic',
   },
+  // Landing site content — served anonymous (no auth), global (no client).
+  landing: {
+    announcementsAll: '/Announcements/GetAll',
+    announcementsLatest: '/Announcements/GetLatest',
+    announcementsUrgent: '/Announcements/GetUrgent',
+    announcementBySlug: '/Announcements/GetBySlug',
+    meetingsAll: '/Meetings/GetAll',
+    meetingsLatest: '/Meetings/GetLatest',
+    meetingById: '/Meetings/GetById',
+    documentsAll: '/Documents/GetAll',
+    documentCategories: '/Documents/GetCategories',
+    documentIncrementDownload: '/Documents/IncrementDownload',
+    statsAll: '/Stats/GetAll',
+    contactSend: '/Contact/Send',
+  },
   clients: {
     list: '/Clients/GetAllUsers',
     add: '/Clients/AddUser',
