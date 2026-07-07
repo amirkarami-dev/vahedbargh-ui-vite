@@ -57,3 +57,14 @@ export interface DocumentItem {
   fileUrl?: string
   featured: boolean
 }
+
+export interface ContactMessage {
+  id: string
+  name: string
+  email?: string
+  mobile?: string
+  subject?: string
+  message: string
+  createdAt: string
+  isRead: boolean
+}

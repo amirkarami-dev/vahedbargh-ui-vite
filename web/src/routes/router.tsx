@@ -121,6 +121,21 @@ const MyFilesPage = lazy(() =>
 const ProfilePage = lazy(() =>
   import('@/features/auth/ProfilePage').then(m => ({ default: m.ProfilePage })),
 )
+const AnnouncementsAdminPage = lazy(() =>
+  import('@/features/admin/landing/AnnouncementsAdminPage').then(m => ({ default: m.AnnouncementsAdminPage })),
+)
+const MeetingsAdminPage = lazy(() =>
+  import('@/features/admin/landing/MeetingsAdminPage').then(m => ({ default: m.MeetingsAdminPage })),
+)
+const DocumentsAdminPage = lazy(() =>
+  import('@/features/admin/landing/DocumentsAdminPage').then(m => ({ default: m.DocumentsAdminPage })),
+)
+const StatsAdminPage = lazy(() =>
+  import('@/features/admin/landing/StatsAdminPage').then(m => ({ default: m.StatsAdminPage })),
+)
+const ContactMessagesPage = lazy(() =>
+  import('@/features/admin/landing/ContactMessagesPage').then(m => ({ default: m.ContactMessagesPage })),
+)
 const ProjectPublicPage = lazy(() =>
   import('@/features/public/ProjectPublicPage').then(m => ({ default: m.ProjectPublicPage })),
 )
@@ -317,6 +332,36 @@ export const router = createBrowserRouter([
         path: '/users',
         element: (
           <RequireRole roles={[Role.Administrator]}>{withSuspense(<UsersPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/announcements',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<AnnouncementsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/meetings',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<MeetingsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/documents',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<DocumentsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/stats',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<StatsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/contact',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<ContactMessagesPage />)}</RequireRole>
         ),
       },
       {

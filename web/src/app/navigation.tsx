@@ -13,6 +13,12 @@ import {
   FileTextOutlined,
   DollarOutlined,
   UserOutlined,
+  GlobalOutlined,
+  NotificationOutlined,
+  CalendarOutlined,
+  FolderOpenOutlined,
+  LineChartOutlined,
+  MailOutlined,
 } from '@ant-design/icons'
 import { Role } from '@/shared/types/roles'
 
@@ -218,6 +224,54 @@ export const navItems: NavItem[] = [
     icon: <FileTextOutlined />,
     path: '/reports/engReports',
     roles: [Role.Engineer],
+  },
+  // Landing site content management (Administrator only).
+  {
+    id: 1012,
+    parentId: null,
+    titleKey: 'menu.landingCms',
+    icon: <GlobalOutlined />,
+    roles: [Role.Administrator],
+  },
+  {
+    id: 101201,
+    parentId: 1012,
+    titleKey: 'menu.cmsAnnouncements',
+    icon: <NotificationOutlined />,
+    path: '/admin/landing/announcements',
+    roles: [Role.Administrator],
+  },
+  {
+    id: 101202,
+    parentId: 1012,
+    titleKey: 'menu.cmsMeetings',
+    icon: <CalendarOutlined />,
+    path: '/admin/landing/meetings',
+    roles: [Role.Administrator],
+  },
+  {
+    id: 101203,
+    parentId: 1012,
+    titleKey: 'menu.cmsDocuments',
+    icon: <FolderOpenOutlined />,
+    path: '/admin/landing/documents',
+    roles: [Role.Administrator],
+  },
+  {
+    id: 101204,
+    parentId: 1012,
+    titleKey: 'menu.cmsStats',
+    icon: <LineChartOutlined />,
+    path: '/admin/landing/stats',
+    roles: [Role.Administrator],
+  },
+  {
+    id: 101205,
+    parentId: 1012,
+    titleKey: 'menu.cmsContact',
+    icon: <MailOutlined />,
+    path: '/admin/landing/contact',
+    roles: [Role.Administrator],
   },
 ]
 

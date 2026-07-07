@@ -28,7 +28,13 @@
     "engPayment": "Eng. payment",
     "users": "Users",
     "myFiles": "My files",
-    "profile": "Profile"
+    "profile": "Profile",
+    "landingCms": "Landing site",
+    "cmsAnnouncements": "Announcements",
+    "cmsMeetings": "Meetings",
+    "cmsDocuments": "Documents",
+    "cmsStats": "Home stats",
+    "cmsContact": "Contact messages"
   },
   "auth": {
     "login": "Login",

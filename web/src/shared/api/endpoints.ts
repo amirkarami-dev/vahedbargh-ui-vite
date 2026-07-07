@@ -91,6 +91,18 @@ export const endpoints = {
     documentIncrementDownload: '/Documents/IncrementDownload',
     statsAll: '/Stats/GetAll',
     contactSend: '/Contact/Send',
+    // Admin (Administrator role) — landing content management.
+    announcementUpsert: '/Announcements/Upsert',
+    announcementDelete: '/Announcements/Delete',
+    meetingUpsert: '/Meetings/Upsert',
+    meetingDelete: '/Meetings/Delete',
+    documentUpsert: '/Documents/Upsert',
+    documentDelete: '/Documents/Delete',
+    statUpsert: '/Stats/Upsert',
+    statDelete: '/Stats/Delete',
+    contactList: '/Contact/GetAll',
+    contactMarkRead: '/Contact/MarkRead',
+    contactDelete: '/Contact/Delete',
   },
   clients: {
     list: '/Clients/GetAllUsers',
