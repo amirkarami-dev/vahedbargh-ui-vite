@@ -1,21 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { EarthTab } from '@/features/public/landing/learning/EarthTab'
 import { TestTab } from '@/features/public/landing/learning/TestTab'
 import { MeterCourse } from '@/features/public/landing/learning/MeterCourse'
+import { SimulatorTab } from '@/features/public/landing/learning/simulator/SimulatorTab'
 import { GOLD, INK, MUTE } from '@/features/public/landing/learning/tokens'
 
-type Tab = 'earth' | 'test' | 'course'
+type Tab = 'earth' | 'test' | 'course' | 'simulator'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'earth', label: 'آموزش اتصال ارت' },
   { id: 'test', label: 'آموزش تست و تحویل تاسیسات برقی' },
   { id: 'course', label: 'دوره کنتور' },
+  { id: 'simulator', label: 'شبیه ساز تست و تحویل' },
 ]
 
-// Self-contained Learning Center (مرکز آموزش) — dark palette matching the
-// attached design (independent of the site light/dark theme).
+const isTab = (v: string | null): v is Tab =>
+  v === 'earth' || v === 'test' || v === 'course' || v === 'simulator'
+
+// Theme-adaptive Learning Center (مرکز آموزش). The active tab syncs with the
+// `?tab=` query param so the «شبیه ساز» nav item can deep-link into it.
 export function LearningPage() {
-  const [tab, setTab] = useState<Tab>('earth')
+  const [params, setParams] = useSearchParams()
+  const urlTab = params.get('tab')
+  const [tab, setTabState] = useState<Tab>(isTab(urlTab) ? urlTab : 'earth')
+
+  // Follow URL changes (e.g. clicking «آموزش» or «شبیه ساز» while on this page).
+  useEffect(() => {
+    if (isTab(urlTab)) {
+      setTabState(urlTab)
+    } else if (!urlTab) {
+      setTabState('earth')
+    }
+  }, [urlTab])
+
+  const setTab = (t: Tab) => {
+    setTabState(t)
+    setParams(t === 'earth' ? {} : { tab: t }, { replace: true })
+  }
 
   return (
     <section
@@ -64,6 +86,7 @@ export function LearningPage() {
         {tab === 'earth' && <EarthTab />}
         {tab === 'test' && <TestTab />}
         {tab === 'course' && <MeterCourse />}
+        {tab === 'simulator' && <SimulatorTab />}
       </div>
     </section>
   )

@@ -10,7 +10,7 @@ import { useLayoutStore, useResolvedTheme } from '@/shared/stores/layoutStore'
 
 export function Header() {
   const scrolled = useScrolled(80)
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const resolved = useResolvedTheme()
   const setThemeMode = useLayoutStore(s => s.setThemeMode)
@@ -20,6 +20,18 @@ export function Header() {
   const loginLabel = authed ? 'داشبورد' : 'ورود به سامانه'
 
   const toggleTheme = () => setThemeMode(resolved === 'dark' ? 'light' : 'dark')
+
+  // Query-aware active state: items with a query (e.g. /learning?tab=simulator)
+  // match only when that query is present; the plain-path sibling stays active
+  // otherwise (so «آموزش» and «شبیه ساز» never highlight together).
+  const isActive = (href: string) => {
+    const [hPath, hQuery] = href.split('?')
+    if (pathname !== hPath) return false
+    if (hQuery) return search.includes(hQuery)
+    return !NAV_ITEMS.some(
+      n => n.href !== href && n.href.includes('?') && n.href.split('?')[0] === hPath && search.includes(n.href.split('?')[1]),
+    )
+  }
 
   return (
     <header
@@ -43,7 +55,7 @@ export function Header() {
         {/* desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
           {NAV_ITEMS.map(item => {
-            const active = pathname === item.href
+            const active = isActive(item.href)
             return (
               <Link
                 key={item.href}
@@ -126,7 +138,7 @@ export function Header() {
               </div>
 
               {NAV_ITEMS.map(item => {
-                const active = pathname === item.href
+                const active = isActive(item.href)
                 return (
                   <Link
                     key={item.href}

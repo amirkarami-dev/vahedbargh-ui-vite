@@ -11,6 +11,7 @@ export const NAV_ITEMS = [
   { label: 'خدمات', href: '/services' },
   { label: 'فرآیندها', href: '/processes' },
   { label: 'آموزش', href: '/learning' },
+  { label: 'شبیه ساز', href: '/learning?tab=simulator' },
   { label: 'درباره ما', href: '/about' },
   { label: 'تماس با ما', href: '/contact' },
 ]
