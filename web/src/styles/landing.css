@@ -36,6 +36,10 @@
   --border-active: rgba(37, 99, 235, 0.5);
   --radius: 0.75rem;
 
+  /* Electrical "voltage" gold — hero accent (same in light & dark). */
+  --gold: #f5a623;
+  --gold-bright: #ffc53d;
+
   --page-hero-gradient: linear-gradient(to bottom, #ebf2ff, #f0f4fa, #ebf2ff);
 
   /* Reuse the app's Persian-numeral font (no extra font files needed). */
@@ -101,6 +105,13 @@
   background-clip: text;
 }
 
+.landing .text-gold-gradient {
+  background: linear-gradient(180deg, #ffd98a 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .landing .glass {
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
@@ -158,5 +169,36 @@
   }
   50% {
     transform: translateY(-8px);
+  }
+}
+
+/* ── Hero (خدمات برق) power-line illustration animations ─────────────────── */
+@keyframes heroPulse {
+  from {
+    stroke-dashoffset: 260;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes heroSpark {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes heroRipple {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
   }
 }

@@ -33,7 +33,7 @@ export function Landing() {
 
   return (
     <>
-      <HeroSection stats={stats} />
+      <HeroSection />
 
       <ServiceGrid />
 
