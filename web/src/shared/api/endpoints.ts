@@ -90,6 +90,7 @@ export const endpoints = {
     documentCategories: '/Documents/GetCategories',
     documentIncrementDownload: '/Documents/IncrementDownload',
     statsAll: '/Stats/GetAll',
+    processFlows: '/Processes/GetAll',
     contactSend: '/Contact/Send',
     // Admin (Administrator role) — landing content management.
     announcementUpsert: '/Announcements/Upsert',

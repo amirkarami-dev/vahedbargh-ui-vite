@@ -1,11 +1,15 @@
 import { get, post } from '@/shared/api/http'
 import { endpoints } from '@/shared/api/endpoints'
 import type { Announcement, DocumentItem, Meeting, StatItem } from '@/features/public/landing/types'
+import type { ProcessFlow } from '@/features/public/landing/data/processes'
 
 const L = endpoints.landing
 
 // --- Stats ---
 export const getStats = () => get<StatItem[]>(L.statsAll)
+
+// --- Process flows ---
+export const getProcessFlows = () => get<ProcessFlow[]>(L.processFlows)
 
 // --- Announcements ---
 export const getLatestAnnouncements = (count = 4) =>

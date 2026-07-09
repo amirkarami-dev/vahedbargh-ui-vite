@@ -8,6 +8,9 @@ const STALE = 5 * 60 * 1000
 export const useStats = () =>
   useQuery({ queryKey: ['landing', 'stats'], queryFn: api.getStats, staleTime: STALE })
 
+export const useProcessFlows = () =>
+  useQuery({ queryKey: ['landing', 'processes'], queryFn: api.getProcessFlows, staleTime: STALE })
+
 export const useLatestAnnouncements = (count = 4) =>
   useQuery({
     queryKey: ['landing', 'announcements', 'latest', count],
