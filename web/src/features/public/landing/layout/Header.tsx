@@ -33,7 +33,10 @@ export function Header() {
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between gap-4">
         {/* brand */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <img src="/logo.png" alt={SITE_NAME} width={36} height={36} className="rounded-lg object-contain" />
+          {/* white plate behind the logo in dark mode so it stays legible */}
+          <span className="w-9 h-9 rounded-lg flex items-center justify-center overflow-hidden dark:bg-white dark:p-1">
+            <img src="/logo.png" alt={SITE_NAME} className="w-full h-full object-contain" />
+          </span>
           <span className="font-bold text-sm text-[var(--text-primary)] hidden sm:block">{SITE_NAME}</span>
         </Link>
 
