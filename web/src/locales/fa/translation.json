@@ -28,7 +28,13 @@
     "engPayment": "مدیریت پرداختی",
     "users": "مدیریت کاربران",
     "myFiles": "فایل‌های من",
-    "profile": "پروفایل"
+    "profile": "پروفایل",
+    "landingCms": "مدیریت سایت",
+    "cmsAnnouncements": "اطلاعیه‌ها",
+    "cmsMeetings": "جلسات",
+    "cmsDocuments": "آرشیو اسناد",
+    "cmsStats": "آمار صفحه اصلی",
+    "cmsContact": "پیام‌های تماس"
   },
   "auth": {
     "login": "ورود",

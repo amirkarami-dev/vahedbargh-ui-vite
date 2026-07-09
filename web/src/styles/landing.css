@@ -1,0 +1,256 @@
+/* Landing (public zone) styles — ported from vahedbargh-web globals.css.
+ *
+ * IMPORTANT: we import Tailwind's THEME + UTILITIES layers only and deliberately
+ * OMIT preflight (the base reset). antd v5 is CSS-in-JS; skipping preflight means
+ * Tailwind never resets antd's buttons/headings/inputs globally. The landing's own
+ * base styles are scoped under `.landing` instead. */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* `dark:` utilities respond to a `.dark` class on the landing wrapper (toggled by
+ * PublicLayout from the app's theme store), not to prefers-color-scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Design tokens (light) — scoped to the landing zone ─────────────────── */
+.landing {
+  --primary: #1b2a4a;
+  --primary-light: #243556;
+  --secondary: #2563eb;
+  --secondary-glow: #3b82f6;
+  --accent: #06b6d4;
+  --highlight: #d97706;
+  --success: #059669;
+  --danger: #dc2626;
+
+  --bg-base: #f0f4fa;
+  --bg-elevated: #ffffff;
+  --bg-raised: #ebf2ff;
+  --bg-glass: rgba(255, 255, 255, 0.8);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --border: rgba(37, 99, 235, 0.15);
+  --border-active: rgba(37, 99, 235, 0.5);
+  --radius: 0.75rem;
+
+  /* Electrical "voltage" gold — hero accent (same in light & dark). */
+  --gold: #f5a623;
+  --gold-bright: #ffc53d;
+
+  --page-hero-gradient: linear-gradient(to bottom, #ebf2ff, #f0f4fa, #ebf2ff);
+
+  /* Reuse the app's Persian-numeral font (no extra font files needed). */
+  --font-landing: 'IRANSansXFaNum', 'Roboto', system-ui, sans-serif;
+
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-landing);
+  line-height: 1.8;
+  direction: rtl;
+  min-height: 100%;
+}
+
+/* ── Dark overrides (class sits on the same .landing element) ───────────── */
+.landing.dark {
+  --bg-base: #0b1120;
+  --bg-elevated: #111827;
+  --bg-raised: #1c2a3f;
+  --bg-glass: rgba(17, 24, 39, 0.85);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+
+  --border: rgba(37, 99, 235, 0.2);
+  --border-active: rgba(37, 99, 235, 0.6);
+
+  --secondary-glow: #60a5fa;
+  --page-hero-gradient: linear-gradient(to bottom, #0b1120, #0f1b35, #0b1120);
+}
+
+/* ── Scoped base element styles (were global in the source) ─────────────── */
+.landing h1,
+.landing h2,
+.landing h3,
+.landing h4,
+.landing h5,
+.landing h6 {
+  font-family: var(--font-landing);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.landing a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.landing :focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Utilities (used inside .landing) ───────────────────────────────────── */
+.landing .text-gradient {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing .text-gold-gradient {
+  background: linear-gradient(180deg, #ffd98a 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing .glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.landing .border-glow {
+  border: 1px solid var(--border);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.landing .border-glow:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.15);
+}
+
+.landing .scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.landing .scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.landing .animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ── Hero (خدمات برق) power-line illustration animations ─────────────────── */
+@keyframes heroPulse {
+  from {
+    stroke-dashoffset: 260;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes heroSpark {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes heroRipple {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+/* ── Learning center (مرکز آموزش) animations ─────────────────────────────── */
+@keyframes learnRise {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes learnPulse {
+  0% { stroke-dashoffset: 220; opacity: 0; }
+  10% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes learnRipple {
+  0% { transform: scale(0.4); opacity: 0.9; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@keyframes learnSpark {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@keyframes learnGlow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.85; }
+}
+@keyframes learnDrive {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+@keyframes learnDash {
+  to { stroke-dashoffset: -24; }
+}
+@keyframes learnNeedle {
+  0%, 100% { transform: rotate(-36deg); }
+  45% { transform: rotate(27deg); }
+  70% { transform: rotate(20deg); }
+}
+@keyframes learnSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes learnBolt {
+  0%, 100% { opacity: 0.15; }
+  6%, 12% { opacity: 1; }
+  9% { opacity: 0.3; }
+}
+@keyframes learnFlow {
+  0% { stroke-dashoffset: 60; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes learnBlink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}

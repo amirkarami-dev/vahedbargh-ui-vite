@@ -77,6 +77,44 @@ const EngineersReportPage = lazy(() =>
 const EngPaymentPage = lazy(() =>
   import('@/features/engPayment/EngPaymentPage').then(m => ({ default: m.EngPaymentPage })),
 )
+const PublicLayout = lazy(() =>
+  import('@/features/public/landing/layout/PublicLayout').then(m => ({ default: m.PublicLayout })),
+)
+const Landing = lazy(() =>
+  import('@/features/public/landing/pages/Landing').then(m => ({ default: m.Landing })),
+)
+const AnnouncementsPage = lazy(() =>
+  import('@/features/public/landing/pages/AnnouncementsPage').then(m => ({ default: m.AnnouncementsPage })),
+)
+const AnnouncementDetailPage = lazy(() =>
+  import('@/features/public/landing/pages/AnnouncementDetailPage').then(m => ({
+    default: m.AnnouncementDetailPage,
+  })),
+)
+const MeetingsPage = lazy(() =>
+  import('@/features/public/landing/pages/MeetingsPage').then(m => ({ default: m.MeetingsPage })),
+)
+const MeetingDetailPage = lazy(() =>
+  import('@/features/public/landing/pages/MeetingDetailPage').then(m => ({ default: m.MeetingDetailPage })),
+)
+const ArchivePage = lazy(() =>
+  import('@/features/public/landing/pages/ArchivePage').then(m => ({ default: m.ArchivePage })),
+)
+const ServicesPage = lazy(() =>
+  import('@/features/public/landing/pages/ServicesPage').then(m => ({ default: m.ServicesPage })),
+)
+const ProcessesPage = lazy(() =>
+  import('@/features/public/landing/pages/ProcessesPage').then(m => ({ default: m.ProcessesPage })),
+)
+const AboutPage = lazy(() =>
+  import('@/features/public/landing/pages/AboutPage').then(m => ({ default: m.AboutPage })),
+)
+const ContactPage = lazy(() =>
+  import('@/features/public/landing/pages/ContactPage').then(m => ({ default: m.ContactPage })),
+)
+const LearningPage = lazy(() =>
+  import('@/features/public/landing/pages/LearningPage').then(m => ({ default: m.LearningPage })),
+)
 const UsersPage = lazy(() =>
   import('@/features/users/UsersPage').then(m => ({ default: m.UsersPage })),
 )
@@ -85,6 +123,21 @@ const MyFilesPage = lazy(() =>
 )
 const ProfilePage = lazy(() =>
   import('@/features/auth/ProfilePage').then(m => ({ default: m.ProfilePage })),
+)
+const AnnouncementsAdminPage = lazy(() =>
+  import('@/features/admin/landing/AnnouncementsAdminPage').then(m => ({ default: m.AnnouncementsAdminPage })),
+)
+const MeetingsAdminPage = lazy(() =>
+  import('@/features/admin/landing/MeetingsAdminPage').then(m => ({ default: m.MeetingsAdminPage })),
+)
+const DocumentsAdminPage = lazy(() =>
+  import('@/features/admin/landing/DocumentsAdminPage').then(m => ({ default: m.DocumentsAdminPage })),
+)
+const StatsAdminPage = lazy(() =>
+  import('@/features/admin/landing/StatsAdminPage').then(m => ({ default: m.StatsAdminPage })),
+)
+const ContactMessagesPage = lazy(() =>
+  import('@/features/admin/landing/ContactMessagesPage').then(m => ({ default: m.ContactMessagesPage })),
 )
 const ProjectPublicPage = lazy(() =>
   import('@/features/public/ProjectPublicPage').then(m => ({ default: m.ProjectPublicPage })),
@@ -99,6 +152,24 @@ const withSuspense = (node: ReactNode) => <Suspense fallback={<PageFallback />}>
 // The protected group below only checks authentication; specific routes add
 // <RequireRole roles={[...]}> for role gating.
 export const router = createBrowserRouter([
+  {
+    // Public landing zone (anonymous). '/' is the landing site; its login CTA
+    // links to /login. Wrapped in the Tailwind-scoped PublicLayout.
+    element: withSuspense(<PublicLayout />),
+    children: [
+      { path: '/', element: withSuspense(<Landing />) },
+      { path: '/announcements', element: withSuspense(<AnnouncementsPage />) },
+      { path: '/announcements/:slug', element: withSuspense(<AnnouncementDetailPage />) },
+      { path: '/meetings', element: withSuspense(<MeetingsPage />) },
+      { path: '/meetings/:id', element: withSuspense(<MeetingDetailPage />) },
+      { path: '/archive', element: withSuspense(<ArchivePage />) },
+      { path: '/services', element: withSuspense(<ServicesPage />) },
+      { path: '/processes', element: withSuspense(<ProcessesPage />) },
+      { path: '/learning', element: withSuspense(<LearningPage />) },
+      { path: '/about', element: withSuspense(<AboutPage />) },
+      { path: '/contact', element: withSuspense(<ContactPage />) },
+    ],
+  },
   {
     element: <NonAuthLayout />,
     children: [
@@ -115,7 +186,6 @@ export const router = createBrowserRouter([
       </RequireRole>
     ),
     children: [
-      { path: '/', element: <Navigate to="/dashboard" replace /> },
       { path: '/dashboard', element: withSuspense(<Dashboard />) },
       { path: '/profile', element: withSuspense(<ProfilePage />) },
       {
@@ -266,6 +336,36 @@ export const router = createBrowserRouter([
         path: '/users',
         element: (
           <RequireRole roles={[Role.Administrator]}>{withSuspense(<UsersPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/announcements',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<AnnouncementsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/meetings',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<MeetingsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/documents',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<DocumentsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/stats',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<StatsAdminPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/contact',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<ContactMessagesPage />)}</RequireRole>
         ),
       },
       {

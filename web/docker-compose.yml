@@ -1,0 +1,23 @@
+services:
+  elec-unit-ui-main_test:
+    image: nginx:alpine
+    container_name: elec-unit-ui-main_test
+    volumes:
+      - ./build:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.elec-unit-ui-main_test.rule=Host(`kurdnezambargh2.ir`)"
+      - "traefik.http.routers.elec-unit-ui-main_test.entrypoints=websecure"
+      - "traefik.http.routers.elec-unit-ui-main_test.tls.certresolver=myresolver"
+      - "traefik.http.services.elec-unit-ui-main_test.loadbalancer.server.port=80"
+      
+      - "traefik.http.routers.elec-unit-ui-main_test-ip.rule=PathPrefix(`/`)" 
+      - "traefik.http.routers.elec-unit-ui-main_test-ip.entrypoints=myport"
+
+    networks:
+      - traefik
+    restart: unless-stopped
+networks:
+  traefik:
+    external: true

@@ -1,0 +1,138 @@
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { CheckSquare, Loader2 } from 'lucide-react'
+import ProcessFlowView from '@/features/public/landing/components/ProcessFlowView'
+import { useProcessFlows } from '@/features/public/landing/api/usePublicContent'
+
+export function ProcessesPage() {
+  const { data: flows = [], isLoading } = useProcessFlows()
+  const [active, setActive] = useState<string | null>(null)
+  const activeFlow = flows.find(f => f.id === active) ?? flows[0]
+
+  return (
+    <div className="min-h-screen bg-[var(--bg-base)]">
+      <section className="relative overflow-hidden bg-[var(--bg-elevated)] border-b border-[var(--border)]">
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              'linear-gradient(var(--secondary) 1px, transparent 1px), linear-gradient(90deg, var(--secondary) 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto px-6 pt-28 pb-20 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600/10 border border-blue-600/20 text-blue-500 text-sm font-medium mb-6">
+              <CheckSquare className="w-4 h-4" />
+              فرآیندهای اجرایی دفتر نظارت برق
+            </span>
+            <h1 className="text-4xl md:text-5xl font-black text-gradient mb-5 leading-tight">راهنمای جامع فرآیندها</h1>
+            <p className="text-[var(--text-secondary)] text-lg max-w-2xl mx-auto leading-relaxed">
+              فرآیندهای رسمی دفتر اجرایی نظارت برق مطابق مبحث ۱۳ مقررات ملی ساختمان، استاندارد IEC 60364-6 و BS 7671
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        {isLoading && (
+          <div className="flex items-center justify-center gap-2 py-24 text-[var(--text-muted)]">
+            <Loader2 className="w-5 h-5 animate-spin" />
+            در حال بارگذاری فرآیندها…
+          </div>
+        )}
+
+        {!isLoading && flows.length === 0 && (
+          <div className="text-center py-24 text-[var(--text-muted)]">فرآیندی برای نمایش وجود ندارد.</div>
+        )}
+
+        {activeFlow && (
+          <>
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              {flows.map(flow => {
+                const isActive = flow.id === activeFlow.id
+                return (
+                  <button
+                    key={flow.id}
+                    onClick={() => setActive(flow.id)}
+                    className={`flex-1 relative group rounded-2xl p-5 text-right transition-all duration-300 border overflow-hidden ${
+                      isActive ? 'border-transparent shadow-lg' : 'border-[var(--border)] bg-[var(--bg-elevated)] hover:border-[var(--border-active)]'
+                    }`}
+                    style={
+                      isActive
+                        ? {
+                            background: `linear-gradient(135deg, ${flow.glowColor}, transparent)`,
+                            borderColor: 'transparent',
+                            boxShadow: `0 0 30px ${flow.glowColor}`,
+                          }
+                        : {}
+                    }
+                  >
+                    <div className="relative flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0 bg-gradient-to-br ${flow.color}`}>
+                        {flow.icon}
+                      </div>
+                      <div className="text-right">
+                        <p className={`font-bold text-base ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                          {flow.title}
+                        </p>
+                        <p className="text-xs text-[var(--text-muted)] mt-0.5 leading-relaxed">{flow.steps.length} مرحله</p>
+                      </div>
+                      {isActive && (
+                        <motion.div
+                          layoutId="tab-indicator"
+                          className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                          style={{ background: `linear-gradient(90deg, transparent, ${flow.glowColor.replace('0.25', '0.8')})` }}
+                        />
+                      )}
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFlow.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35 }}
+                className="mb-10"
+              >
+                <div
+                  className="rounded-2xl p-6 border"
+                  style={{
+                    background: `linear-gradient(135deg, ${activeFlow.glowColor}, transparent)`,
+                    borderColor: activeFlow.glowColor.replace('0.25', '0.3'),
+                  }}
+                >
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className="text-3xl">{activeFlow.icon}</span>
+                    <div>
+                      <h2 className="text-xl font-black text-[var(--text-primary)]">{activeFlow.title}</h2>
+                      <p className="text-sm text-[var(--text-muted)]">{activeFlow.subtitle}</p>
+                    </div>
+                  </div>
+                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed">{activeFlow.description}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFlow.id + '-flow'}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ProcessFlowView flow={activeFlow} />
+              </motion.div>
+            </AnimatePresence>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
