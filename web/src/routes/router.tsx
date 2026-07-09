@@ -112,6 +112,9 @@ const AboutPage = lazy(() =>
 const ContactPage = lazy(() =>
   import('@/features/public/landing/pages/ContactPage').then(m => ({ default: m.ContactPage })),
 )
+const LearningPage = lazy(() =>
+  import('@/features/public/landing/pages/LearningPage').then(m => ({ default: m.LearningPage })),
+)
 const UsersPage = lazy(() =>
   import('@/features/users/UsersPage').then(m => ({ default: m.UsersPage })),
 )
@@ -162,6 +165,7 @@ export const router = createBrowserRouter([
       { path: '/archive', element: withSuspense(<ArchivePage />) },
       { path: '/services', element: withSuspense(<ServicesPage />) },
       { path: '/processes', element: withSuspense(<ProcessesPage />) },
+      { path: '/learning', element: withSuspense(<LearningPage />) },
       { path: '/about', element: withSuspense(<AboutPage />) },
       { path: '/contact', element: withSuspense(<ContactPage />) },
     ],
