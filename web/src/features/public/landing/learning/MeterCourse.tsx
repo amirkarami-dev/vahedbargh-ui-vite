@@ -565,7 +565,7 @@ export function MeterCourse() {
         </p>
       </header>
 
-      <nav style={{ display: 'flex', flexWrap: 'wrap', gap: 10, position: 'sticky', top: 56, zIndex: 5, padding: '14px 0', background: 'linear-gradient(#070D1A 70%, transparent)' }}>
+      <nav style={{ display: 'flex', flexWrap: 'wrap', gap: 10, position: 'sticky', top: 56, zIndex: 5, padding: '14px 0', background: 'linear-gradient(var(--bg-base) 70%, transparent)' }}>
         {MODULES.map((m, i) => {
           const on = m.id === active.id
           return (
@@ -577,7 +577,7 @@ export function MeterCourse() {
                 display: 'inline-flex', alignItems: 'center', gap: 8, padding: '9px 16px 9px 12px', borderRadius: 999,
                 cursor: 'pointer', fontFamily: 'inherit', fontSize: 14.5, fontWeight: on ? 700 : 400,
                 border: on ? '1px solid rgba(255,197,61,0.6)' : '1px solid rgba(120,150,200,0.22)',
-                background: on ? 'rgba(255,197,61,0.12)' : 'rgba(13,22,40,0.5)', color: on ? GOLD : MUTE, whiteSpace: 'nowrap',
+                background: on ? 'rgba(255,197,61,0.12)' : 'var(--bg-elevated)', color: on ? GOLD : MUTE, whiteSpace: 'nowrap',
               }}
             >
               <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 22, height: 22, borderRadius: '50%', background: 'rgba(255,197,61,0.15)', color: GOLD, fontSize: 12, fontWeight: 900 }}>{fa(i + 1)}</span>

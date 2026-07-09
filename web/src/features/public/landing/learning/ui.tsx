@@ -53,7 +53,7 @@ export function Wrap({ children }: { children: ReactNode }) {
 // Module header: animated glyph + title + subtitle.
 export function ModuleHeader({ anim, title, sub }: { anim: ReactNode; title: string; sub: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', padding: '28px 30px', borderRadius: 22, background: 'rgba(13,22,40,0.6)', border: cardBorder, marginBottom: 32, animation: 'learnRise 0.6s cubic-bezier(0.22,1,0.36,1) both' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', padding: '28px 30px', borderRadius: 22, background: 'var(--bg-elevated)', border: cardBorder, marginBottom: 32, animation: 'learnRise 0.6s cubic-bezier(0.22,1,0.36,1) both' }}>
       <div style={{ flexShrink: 0, width: 200, height: 130, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{anim}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, minWidth: 260 }}>
         <h2 style={{ margin: 0, fontSize: 30, fontWeight: 900, color: INK }}>{title}</h2>

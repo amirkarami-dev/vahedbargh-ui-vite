@@ -117,7 +117,7 @@ export function TestTab() {
       {/* fall-of-potential diagram + acceptance */}
       <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 48, alignItems: 'center' }}>
         <div>
-          <div style={{ position: 'relative', border: cardBorder, borderRadius: 20, background: 'rgba(13,22,40,0.6)', padding: 24, overflow: 'hidden' }}>
+          <div style={{ position: 'relative', border: cardBorder, borderRadius: 20, background: 'var(--bg-elevated)', padding: 24, overflow: 'hidden' }}>
             <span style={{ position: 'absolute', top: 16, right: 20, fontSize: 12.5, color: '#6C7A93', letterSpacing: '0.06em' }}>اندازه‌گیری مقاومت زمین — روش افت پتانسیل (۶۲٪)</span>
             <svg viewBox="0 0 520 340" fill="none" style={{ width: '100%', height: 'auto', display: 'block', marginTop: 16 }}>
               <rect x="200" y="30" width="120" height="86" rx="10" stroke="#8FA3C2" strokeWidth="2" />

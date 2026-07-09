@@ -22,7 +22,7 @@ export function LearningPage() {
       dir="rtl"
       style={{
         position: 'relative', overflow: 'hidden', width: '100%', minHeight: '100vh',
-        background: '#070D1A', color: INK, boxSizing: 'border-box',
+        background: 'var(--bg-base)', color: INK, boxSizing: 'border-box',
       }}
     >
       {/* background grid + glow */}

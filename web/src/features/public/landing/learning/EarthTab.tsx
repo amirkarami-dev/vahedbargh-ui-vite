@@ -42,7 +42,7 @@ export function EarthTab() {
       {/* diagram + why */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center' }}>
         <div>
-          <div style={{ position: 'relative', border: cardBorder, borderRadius: 20, background: 'rgba(13,22,40,0.6)', padding: 24, overflow: 'hidden' }}>
+          <div style={{ position: 'relative', border: cardBorder, borderRadius: 20, background: 'var(--bg-elevated)', padding: 24, overflow: 'hidden' }}>
             <span style={{ position: 'absolute', top: 16, right: 20, fontSize: 12.5, color: '#6C7A93', letterSpacing: '0.06em' }}>برش عرضی چاه ارت — روش زمین عمقی</span>
             <svg viewBox="0 0 480 460" fill="none" style={{ width: '100%', height: 'auto', display: 'block', marginTop: 12 }}>
               <rect x="70" y="60" width="120" height="150" rx="8" stroke="#8FA3C2" strokeWidth="2" />
