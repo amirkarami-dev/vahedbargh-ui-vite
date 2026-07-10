@@ -34,7 +34,8 @@
     "cmsMeetings": "جلسات",
     "cmsDocuments": "آرشیو اسناد",
     "cmsStats": "آمار صفحه اصلی",
-    "cmsContact": "پیام‌های تماس"
+    "cmsContact": "پیام‌های تماس",
+    "cmsProcesses": "فرآیندها"
   },
   "auth": {
     "login": "ورود",

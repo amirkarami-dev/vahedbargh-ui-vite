@@ -14,6 +14,8 @@ export const useAdminStats = () =>
   useQuery({ queryKey: ['admin-landing', 'stats'], queryFn: read.getStats })
 export const useContactMessages = () =>
   useQuery({ queryKey: ['admin-landing', 'contact'], queryFn: admin.getContactMessages })
+export const useAdminProcessFlows = () =>
+  useQuery({ queryKey: ['admin-landing', 'processes'], queryFn: admin.getAdminProcessFlows })
 
 // Shared mutation helper: toast + invalidate both admin and public caches.
 function useLandingMutation<TArgs>(
@@ -53,3 +55,7 @@ export const useDeleteStat = () => useLandingMutation(admin.deleteStat, 'آما�
 export const useMarkContactRead = () =>
   useLandingMutation((v: { id: string; isRead: boolean }) => admin.markContactRead(v.id, v.isRead), 'وضعیت پیام به‌روزرسانی شد')
 export const useDeleteContactMessage = () => useLandingMutation(admin.deleteContactMessage, 'پیام حذف شد')
+
+// --- Process flows ---
+export const useUpsertProcessFlow = () => useLandingMutation(admin.upsertProcessFlow, 'فرآیند ذخیره شد')
+export const useDeleteProcessFlow = () => useLandingMutation(admin.deleteProcessFlow, 'فرآیند حذف شد')

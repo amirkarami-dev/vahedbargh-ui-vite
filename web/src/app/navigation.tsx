@@ -273,6 +273,14 @@ export const navItems: NavItem[] = [
     path: '/admin/landing/contact',
     roles: [Role.Administrator],
   },
+  {
+    id: 101206,
+    parentId: 1012,
+    titleKey: 'menu.cmsProcesses',
+    icon: <ControlOutlined />,
+    path: '/admin/landing/processes',
+    roles: [Role.Administrator],
+  },
 ]
 
 type MenuItem = Required<MenuProps>['items'][number]

@@ -139,6 +139,9 @@ const StatsAdminPage = lazy(() =>
 const ContactMessagesPage = lazy(() =>
   import('@/features/admin/landing/ContactMessagesPage').then(m => ({ default: m.ContactMessagesPage })),
 )
+const ProcessFlowsAdminPage = lazy(() =>
+  import('@/features/admin/landing/ProcessFlowsAdminPage').then(m => ({ default: m.ProcessFlowsAdminPage })),
+)
 const ProjectPublicPage = lazy(() =>
   import('@/features/public/ProjectPublicPage').then(m => ({ default: m.ProjectPublicPage })),
 )
@@ -366,6 +369,12 @@ export const router = createBrowserRouter([
         path: '/admin/landing/contact',
         element: (
           <RequireRole roles={[Role.Administrator]}>{withSuspense(<ContactMessagesPage />)}</RequireRole>
+        ),
+      },
+      {
+        path: '/admin/landing/processes',
+        element: (
+          <RequireRole roles={[Role.Administrator]}>{withSuspense(<ProcessFlowsAdminPage />)}</RequireRole>
         ),
       },
       {

@@ -34,7 +34,8 @@
     "cmsMeetings": "Meetings",
     "cmsDocuments": "Documents",
     "cmsStats": "Home stats",
-    "cmsContact": "Contact messages"
+    "cmsContact": "Contact messages",
+    "cmsProcesses": "Processes"
   },
   "auth": {
     "login": "Login",

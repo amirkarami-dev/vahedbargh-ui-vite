@@ -71,3 +71,33 @@ export const deleteStat = (id: string) => post<void>(L.statDelete, { id })
 export const getContactMessages = () => get<ContactMessage[]>(L.contactList)
 export const markContactRead = (id: string, isRead: boolean) => post<void>(L.contactMarkRead, { id, isRead })
 export const deleteContactMessage = (id: string) => post<void>(L.contactDelete, { id })
+
+// --- Process flows (فرآیندها) ---
+export type ProcessStepInput = {
+  title: string
+  description?: string
+  details: string[]
+  requiredDocs: string[]
+  tools: string[]
+  note?: string
+  isDecision: boolean
+  decisionYes?: string
+  decisionNo?: string
+}
+export type AdminProcessFlow = {
+  id: string
+  key: string
+  title: string
+  subtitle?: string
+  description?: string
+  color?: string
+  glowColor?: string
+  icon?: string
+  sortOrder: number
+  steps: ProcessStepInput[]
+}
+export type ProcessFlowInput = Omit<AdminProcessFlow, 'id'> & { id?: string }
+
+export const getAdminProcessFlows = () => get<AdminProcessFlow[]>(L.processesAdmin)
+export const upsertProcessFlow = (data: ProcessFlowInput) => post<AdminProcessFlow>(L.processUpsert, data)
+export const deleteProcessFlow = (id: string) => post<void>(L.processDelete, { id })
