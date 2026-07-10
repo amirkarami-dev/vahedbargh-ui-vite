@@ -91,6 +91,16 @@
   text-decoration: none;
 }
 
+/* Form controls don't inherit font-family by default, and we deliberately omit
+ * Tailwind's preflight (to keep antd intact). Opt them back in inside the
+ * landing zone so buttons/inputs/selects use the Persian landing font. */
+.landing button,
+.landing input,
+.landing select,
+.landing textarea {
+  font-family: inherit;
+}
+
 .landing :focus-visible {
   outline: 2px solid var(--secondary);
   outline-offset: 2px;
